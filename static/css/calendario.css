@@ -1,0 +1,40 @@
+/* Estilo para el contenedor del calendario */
+.calendar-container {
+    padding: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo para el formulario de reserva */
+#reservationForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    display: block; /* Está oculto por defecto */
+    z-index: 9999; /* Asegúrate de que tenga un alto z-index */
+}
+
+
+#reservationForm.hidden {
+    display: none;
+}
+
+#reservationForm input {
+    margin: 5px 0;
+    padding: 8px;
+    width: 100%;
+}
+
+/* Color personalizado para los días reservados */
+.fc-event {
+    background-color: #87cfad !important; /* Color que se aplica a las reservas */
+    border-color: #87cfad !important; /* Borde que se aplica a las reservas */
+}

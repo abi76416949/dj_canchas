@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/calendario.css' %}">
+    <title>Calendario Semanal</title>
+</head>
+<body>
+    <div id="calendar" class="calendar-container"></div>
+    
+    <!-- Formulario de reserva que aparecerá cuando se haga clic en un día -->
+    <div id="reservationForm" class="hidden">
+        <form method="POST" action="{% url 'crear_reserva' %}">
+            {% csrf_token %}
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" required><br>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" name="telefono" required><br>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required><br>
+            <input type="hidden" name="fecha" id="fechaReserva">
+            <input type="submit" value="Reservar">
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',  // Vista inicial: semana
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'timeGridWeek,timeGridDay'
+                },
+                events: [
+                    {% for reserva in reservas %}
+                        {
+                            title: '{{ reserva.nombre }}',  // Título de la reserva
+                            start: '{{ reserva.fecha }}T{{ reserva.hora_inicio }}',  // Fecha y hora de inicio
+                            end: '{{ reserva.fecha }}T{{ reserva.hora_fin }}',  // Fecha y hora de fin
+                            backgroundColor: 'rgb(87, 155, 248)',  // Color para mostrar como reservado
+                            borderColor: 'rgb(87, 155, 248)',  // Color del borde
+                            extendedProps: { reservado: true },  // Propiedad para saber si está reservado
+                        },
+                    {% endfor %}
+                ],
+                // Limitar la vista a las horas de 8 AM a 12 PM
+                validRange: {
+                    start: '2025-04-01', // Establece un rango válido para el calendario
+                    end: '2025-10-30'
+                },
+                slotMinTime: '08:00:00', // Hora mínima visible (8 AM)
+                slotMaxTime: '23:00:00', // Hora máxima visible (12 PM)
+                slotDuration: '00:30:00', // Duración de cada franja horaria (30 min)
+                slotLabelInterval: '00:30', // Intervalo de las etiquetas del horario (cada 30 min)
+
+              // Evento cuando se hace clic en una celda (vacía o con evento)
+             dateClick: function(info) {
+                console.log("Fecha seleccionada: " + info.dateStr);  // Verifica si se dispara
+                var fecha = info.dateStr;  // `info.dateStr` es la fecha seleccionada
+                document.getElementById('fechaReserva').value = fecha;  // Asigna la fecha al formulario
+                // Asigna el cancha_id si es necesario
+                var canchaId = 'someCanchaId'; // Esto debe ser dinámico según el contexto de tu aplicación
+                document.getElementById('cancha_id').value = canchaId;
+
+
+
+                // Muestra el formulario
+                document.getElementById('reservationForm').classList.remove('hidden');
+                console.log('Formulario mostrado');
+            },
+
+
+                // Evento cuando se hace clic en un evento ya reservado
+                eventClick: function(info) {
+                    var fecha = info.event.start.toISOString().split('T')[0];
+                    document.getElementById('fechaReserva').value = fecha; // Asigna la fecha al formulario
+                    document.getElementById('reservationForm').classList.remove('hidden'); // Muestra el formulario
+
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

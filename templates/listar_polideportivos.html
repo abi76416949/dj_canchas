@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="{% static 'css/globals.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/styleguide.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+  <div class="desktop">
+    <header class="h-EADER">
+      <div class="frame">
+        <div class="text-wrapper">CANCHAS</div>
+        <img class="icon-futbol" src="{% static 'img/icon-futbol.png' %}" />
+        <div class="div">G</div>
+      </div>
+      <div class="frame-2">
+        <a href="{% url 'login' %}" class="button">
+         <div class="text-wrapper-2">INICIAR SESIÓN</div>
+        </a>
+
+        <div class="ERES-UN">¿ERES UN<br />POLIDEPORTIVO?</div>
+      </div>
+    </header>
+
+    <div class="TITLE">
+      <p class="LISTA-DE">
+        <span class="span">Reserva tu cancha</span>
+        <span class="text-wrapper-3">&nbsp;</span>
+        <span class="text-wrapper-4">AHORA!</span>
+      </p>
+    </div>
+
+    <div class="elige-tu-poli" data-conf-mode="desktop">
+      <div class="div-wrapper"><div class="text-wrapper-5">Elige tu polideportivo!</div></div>
+    </div>
+
+    <div class="polideportivos" data-conf-mode="desktop">
+      {% for poli in polideportivos %}
+      <a href="{% url 'listar_court'%}" > 
+        <div class="p-olideportivo" >
+          <div  class="image-wrapper">
+            <img class="image" src="{{ poli.imagen.url }}" alt="Imagen del polideportivo" />
+          </div>
+          <div class="frame-3">
+            <div class="text-wrapper-6">{{ poli.nombre }}</div>
+            <div class="frame-4">
+              <div class="overlap-group-wrapper">
+                <div class="overlap-group">
+                  <div class="text-wrapper-7">UBICACIÓN:</div>
+                  <p class="p">{{ poli.ubicacion }}</p>
+                </div>
+              </div>
+              <img class="icon-alternate-map" src="{% static 'img/icon-alternate-map-marker.png' %}" />
+            </div>
+            <div class="frame-5">
+              <div class="text-wrapper-8">CALIFICACIÓN:</div>
+              <img class="icon-star" src="{% static 'img/icon-star.png' %}" />
+              <img class="icon-star" src="{% static 'img/icon-star.png' %}" />
+              <img class="icon-star" src="{% static 'img/icon-star.png' %}" />
+              <img class="icon-star" src="{% static 'img/icon-star.png' %}" />
+              <img class="icon-star" src="{% static 'img/icon-star.png' %}" />
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <footer class="footer" data-conf-mode="desktop">
+      <p class="element-GOCANCHAS-todos">
+        <span class="text-wrapper-10">© 2025 GOCANCHAS! </span>
+        <span class="text-wrapper-11">Todos los derechos reservados</span>
+      </p>
+      <div class="frame-6">
+        <div class="text-wrapper-12">Contacto</div>
+        <div class="text-wrapper-12">Acerca de</div>
+        <div class="text-wrapper-12">Política de privacidad</div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

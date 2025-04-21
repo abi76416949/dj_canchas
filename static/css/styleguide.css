@@ -1,0 +1,55 @@
+:root {
+  --variable-collection-primario: rgba(0, 174, 239, 1);
+  --variable-collection-fondo-oscuro-base: rgba(18, 46, 67, 1);
+  --variable-collection-color-acento: rgba(242, 92, 5, 1);
+  --variable-collection-segundario-suave: rgba(214, 237, 245, 1);
+  --variable-collection-texto-principal: rgba(255, 255, 255, 1);
+  --variable-collection-fondooscuror: rgba(19, 42, 19, 1);
+  --variable-collection-hover-acento-alterno: rgba(0, 184, 148, 1);
+  --variable-collection-texto-segundario: rgba(176, 199, 209, 1);
+  --conf-webscren: 1600px;
+  --conf-padding: 80px;
+  --conf-button: initial;
+  --conf-icon: none;
+  --conf-h1: 64px;
+  --conf-h2: 32px;
+}
+
+/*
+
+To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
+
+<body data-conf-mode="desktop">
+    <!-- the rest of your content -->
+</body>
+
+You can apply the theme on any DOM node, not just the `body`
+
+*/
+
+[data-conf-mode="desktop"] {
+  --conf-webscren: 1600px;
+  --conf-padding: 80px;
+  --conf-button: initial;
+  --conf-icon: none;
+  --conf-h1: 64px;
+  --conf-h2: 32px;
+}
+
+[data-conf-mode="tablet"] {
+  --conf-webscren: 834px;
+  --conf-padding: 32px;
+  --conf-button: initial;
+  --conf-icon: none;
+  --conf-h1: 40px;
+  --conf-h2: 24px;
+}
+
+[data-conf-mode="mobile"] {
+  --conf-webscren: 412px;
+  --conf-padding: 20px;
+  --conf-button: none;
+  --conf-icon: initial;
+  --conf-h1: 32px;
+  --conf-h2: 24px;
+}

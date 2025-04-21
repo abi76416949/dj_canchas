@@ -1,0 +1,195 @@
+.OPCION-CANCHAS {
+  display: flex;
+  flex-direction: column;
+  height: 2819px;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.OPCION-CANCHAS .TITLE {
+  display: flex;
+  flex-wrap: wrap;
+  width: var(--conf-webscren);
+  align-items: center;
+  justify-content: center;
+  gap: 10px 10px;
+  padding: 14px var(--conf-padding) 14px var(--conf-padding);
+  position: relative;
+  flex: 0 0 auto;
+  margin-left: -288.00px;
+  margin-right: -288.00px;
+}
+
+.OPCION-CANCHAS .LISTA-DE {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Inria Sans-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--variable-collection-color-acento);
+  font-size: 64px;
+  text-align: center;
+  letter-spacing: -4.48px;
+  line-height: normal;
+}
+
+.OPCION-CANCHAS .CANCHAS {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 16px;
+  padding: var(--conf-padding);
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.OPCION-CANCHAS .canchas {
+  display: flex;
+  flex-direction: column;
+  min-width: 350px;
+  max-width: 800px;
+  height: 601px;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 39px 32px;
+  position: relative;
+  flex: 1;
+  flex-grow: 1;
+  background-color: var(--variable-collection-fondo-oscuro-base);
+  border-radius: 10px;
+  overflow: hidden;
+  border-right-width: 7px;
+  border-right-style: solid;
+  border-bottom-width: 7px;
+  border-bottom-style: solid;
+  border-color: #00000047;
+}
+
+.OPCION-CANCHAS .frame {
+  height: 296px;
+  margin-top: -5.00px;
+  margin-left: -5.00px;
+  margin-right: -5.00px;
+  border-radius: 10px;
+  overflow: hidden;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  border-color: #00000047;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+}
+
+.OPCION-CANCHAS .image {
+  position: absolute;
+  width: 640px;
+  height: 286px;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.OPCION-CANCHAS .div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 14px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+}
+
+.OPCION-CANCHAS .text-wrapper {
+  position: relative;
+  align-self: stretch;
+  margin-top: -1.00px;
+  font-family: "Inria Sans-Bold", Helvetica;
+  font-weight: 700;
+  color: var(--variable-collection-color-acento);
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: -1.68px;
+  line-height: normal;
+}
+
+.OPCION-CANCHAS .frame-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+  flex: 1;
+  flex-grow: 1;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+}
+
+.OPCION-CANCHAS .text-wrapper-2 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Inria Sans-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: -1.12px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.OPCION-CANCHAS .lorem-ipsum-dolor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 144px;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+}
+
+.OPCION-CANCHAS .lorem-ipsum-dolor {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  margin-top: -1.00px;
+  font-family: "Inria Sans-Light", Helvetica;
+  font-weight: 300;
+  color: var(--variable-collection-texto-segundario);
+  font-size: 16px;
+  letter-spacing: -1.12px;
+  line-height: normal;
+}
+
+.OPCION-CANCHAS .c-OMENTARIOS {
+  position: relative;
+  width: 1360px;
+  height: 364px;
+  margin-left: -248.00px;
+  margin-right: -248.00px;
+  background-color: var(--variable-collection-fondo-oscuro-base);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.OPCION-CANCHAS .text-wrapper-3 {
+  position: absolute;
+  top: 170px;
+  left: 528px;
+  font-family: "Inria Sans-Bold", Helvetica;
+  font-weight: 700;
+  color: #000000;
+  font-size: 64px;
+  text-align: center;
+  letter-spacing: -4.48px;
+  line-height: normal;
+}

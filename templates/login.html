@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h2 class="text-wrapper">INICIAR SESIÓN</h2>
+
+      <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="error-message">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="form-group">
+          <label for="{{ form.username.id_for_label }}">Usuario</label>
+          <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.password.id_for_label }}">Contraseña</label>
+          <input type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" required>
+        </div>
+
+        <button type="submit" class="button">
+          <div class="text-wrapper-2">ENTRAR</div>
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

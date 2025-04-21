@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Polideportivo</title>
+</head>
+<body>
+    <h1>Crear Polideportivo</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Nombre:</label>
+        <input type="text" name="nombre"><br>
+        <label>Ubicación:</label>
+        <input type="text" name="ubicacion"><br>
+        <label>Contacto:</label>
+        <input type="text" name="contacto"><br>
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>
