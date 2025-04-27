@@ -39,7 +39,7 @@
 
     <div class="polideportivos" data-conf-mode="desktop">
       {% for poli in polideportivos %}
-      <a href="{% url 'listar_court'%}" > 
+      <a href="{% url 'listar_courts' polideportivo_id=poli.id %}" > 
         <div class="p-olideportivo" >
           <div  class="image-wrapper">
             <img class="image" src="{{ poli.imagen.url }}" alt="Imagen del polideportivo" />

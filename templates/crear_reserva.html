@@ -1,19 +1,11 @@
-<form method="post">
+<form method="POST">
     {% csrf_token %}
-    <input type="text" name="nombre" placeholder="Nombre" required><br>
-    <input type="text" name="telefono" placeholder="Teléfono" required><br>
-    <input type="email" name="email" placeholder="Correo" required><br>
-    
-    <label for="cancha_id">Cancha:</label>
-    <select name="cancha_id" required>
-      {% for cancha in canchas %}
-        <option value="{{ cancha.id }}">{{ cancha.nombre }}</option>
-      {% endfor %}
-    </select><br>
-  
-    <input type="date" name="fecha" required><br>
-    <input type="time" name="hora_inicio" required><br>
-    <input type="time" name="hora_fin" required><br>
+    <input type="hidden" id="cancha_id" name="cancha_id" value="{{ court_id }}">
+    <input type="hidden" id="poli_id" name="polideportivo_id" value="{{ polideportivo_id }}">
+    <input type="hidden" id="fechaReserva" name="fecha">
 
+    <label>Nombre: <input type="text" name="nombre" required></label><br>
+    <label>Teléfono: <input type="text" name="telefono" required></label><br>
+    <label>Email: <input type="email" name="email" required></label><br>
     <button type="submit">Reservar</button>
 </form>

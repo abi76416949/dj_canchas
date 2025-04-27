@@ -1,91 +1,98 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/calendario.css' %}">
-    <title>Calendario Semanal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/calendario.css' %}">
+  <title>Calendario Semanal</title>
 </head>
 <body>
-    <div id="calendar" class="calendar-container"></div>
-    
-    <!-- Formulario de reserva que aparecerá cuando se haga clic en un día -->
-    <div id="reservationForm" class="hidden">
-        <form method="POST" action="{% url 'crear_reserva' %}">
-            {% csrf_token %}
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" required><br>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" name="telefono" required><br>
-            <label for="email">Email:</label>
-            <input type="email" name="email" required><br>
-            <input type="hidden" name="fecha" id="fechaReserva">
-            <input type="submit" value="Reservar">
-        </form>
-    </div>
+  <div id="calendar" class="calendar-container"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',  // Vista inicial: semana
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'timeGridWeek,timeGridDay'
-                },
-                events: [
-                    {% for reserva in reservas %}
-                        {
-                            title: '{{ reserva.nombre }}',  // Título de la reserva
-                            start: '{{ reserva.fecha }}T{{ reserva.hora_inicio }}',  // Fecha y hora de inicio
-                            end: '{{ reserva.fecha }}T{{ reserva.hora_fin }}',  // Fecha y hora de fin
-                            backgroundColor: 'rgb(87, 155, 248)',  // Color para mostrar como reservado
-                            borderColor: 'rgb(87, 155, 248)',  // Color del borde
-                            extendedProps: { reservado: true },  // Propiedad para saber si está reservado
-                        },
-                    {% endfor %}
-                ],
-                // Limitar la vista a las horas de 8 AM a 12 PM
-                validRange: {
-                    start: '2025-04-01', // Establece un rango válido para el calendario
-                    end: '2025-10-30'
-                },
-                slotMinTime: '08:00:00', // Hora mínima visible (8 AM)
-                slotMaxTime: '23:00:00', // Hora máxima visible (12 PM)
-                slotDuration: '00:30:00', // Duración de cada franja horaria (30 min)
-                slotLabelInterval: '00:30', // Intervalo de las etiquetas del horario (cada 30 min)
+  <div id="reservationForm" class="hidden">
+    <form
+      method="POST">
+      {% csrf_token %}
 
-              // Evento cuando se hace clic en una celda (vacía o con evento)
-             dateClick: function(info) {
-                console.log("Fecha seleccionada: " + info.dateStr);  // Verifica si se dispara
-                var fecha = info.dateStr;  // `info.dateStr` es la fecha seleccionada
-                document.getElementById('fechaReserva').value = fecha;  // Asigna la fecha al formulario
-                // Asigna el cancha_id si es necesario
-                var canchaId = 'someCanchaId'; // Esto debe ser dinámico según el contexto de tu aplicación
-                document.getElementById('cancha_id').value = canchaId;
+      <input type="hidden" id="cancha_id"   name="cancha_id"        value="{{ court_id }}">
+      <input type="hidden" id="poli_id"      name="polideportivo_id" value="{{ polideportivo_id }}">
+      <input type="hidden" id="fechaReserva" name="fecha">
 
+      <!-- campos visibles -->
+      <label>Nombre: <input type="text" name="nombre" required></label><br>
+      <label>Teléfono: <input type="text" name="telefono" required></label><br>
+      <label>Email:    <input type="email" name="email" required></label><br>
+      <label>Hora de inicio: <input type="time" name="hora_inicio" required></label><br>
+      <label>Hora de fin: <input type="time" name="hora_fin" required></label><br>
+      <button type="submit">Reservar</button>
+    </form>
+  </div>
 
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Si quieres reforzar ID desde JS:
+    // var canchaId = "{{ court_id }}";
+    // var poliId   = "{{ polideportivo_id }}";
 
-                // Muestra el formulario
-                document.getElementById('reservationForm').classList.remove('hidden');
-                console.log('Formulario mostrado');
+    var calendar = new FullCalendar.Calendar(
+      document.getElementById('calendar'),
+      {
+        initialView: 'timeGridWeek',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'timeGridWeek,timeGridDay'
+        },
+        events: [
+          {% for reserva in reservas %}
+            {
+                title: 'RESERVADO',
+                start: '{{ reserva.fecha }}T{{ reserva.hora_inicio }}',
+                end:   '{{ reserva.fecha }}T{{ reserva.hora_fin }}',
+                backgroundColor: '#FF5C5C',  // rojo suave
+                borderColor: '#FF5C5C',      // rojo suave
+                textColor: 'white',          // letras blancas
             },
+          {% endfor %}
+        ],
+        validRange: {
+          start: '2025-04-01',
+          end:   '2025-10-30'
+        },
+        slotMinTime:    '08:00:00',
+        slotMaxTime:    '23:00:00',
+        slotDuration:   '00:30:00',
+        slotLabelInterval: '00:30',
+
+      dateClick: function(info) {
+        const [fecha, hora_inicio] = info.dateStr.split('T');
+
+        document.getElementById('fechaReserva').value = fecha;
+
+        // Para hora de inicio creamos un input hidden
+        document.getElementById('horaInicio').value = hora_inicio.substring(0,5); // 08:00
+        document.getElementById('horaFin').value = calcularHoraFin(hora_inicio);
+
+        document.getElementById('reservationForm').classList.remove('hidden');
+      }
+
+     
 
 
-                // Evento cuando se hace clic en un evento ya reservado
-                eventClick: function(info) {
-                    var fecha = info.event.start.toISOString().split('T')[0];
-                    document.getElementById('fechaReserva').value = fecha; // Asigna la fecha al formulario
-                    document.getElementById('reservationForm').classList.remove('hidden'); // Muestra el formulario
+      }
+    );
 
-                }
-            });
-            calendar.render();
-        });
-    </script>
+    calendar.render();
+  });
+  function calcularHoraFin(horaInicio) {
+    const [hora, minuto] = horaInicio.split(':').map(Number);
+    let nuevaHora = hora + 1;
+    if (nuevaHora > 23) nuevaHora = 23;  // No pasarse de las 23h
+    return (nuevaHora < 10 ? '0' : '') + nuevaHora + ':' + minuto;
+  }
+  </script>
 </body>
 </html>
