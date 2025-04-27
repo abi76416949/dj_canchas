@@ -25,8 +25,8 @@
       <label>Nombre: <input type="text" name="nombre" required></label><br>
       <label>Teléfono: <input type="text" name="telefono" required></label><br>
       <label>Email:    <input type="email" name="email" required></label><br>
-      <label>Hora de inicio: <input type="time" name="hora_inicio" required></label><br>
-      <label>Hora de fin: <input type="time" name="hora_fin" required></label><br>
+      <label>Hora de inicio: <input type="time" id="hora_inicio" name="hora_inicio" required></label><br>
+      <label>Hora de fin: <input type="time" id="hora_fin" name="hora_fin" required></label><br>
       <button type="submit">Reservar</button>
     </form>
   </div>
@@ -50,8 +50,10 @@
           {% for reserva in reservas %}
             {
                 title: 'RESERVADO',
-                start: '{{ reserva.fecha }}T{{ reserva.hora_inicio }}',
-                end:   '{{ reserva.fecha }}T{{ reserva.hora_fin }}',
+                //como estamos trabajando con fullcalendar necesitamos poner la fecha en formato correcto para que lo entienda
+                start: '{{ reserva.fecha|date:"Y-m-d" }}T{{ reserva.hora_inicio|time:"H:i:s" }}',
+                end:   '{{ reserva.fecha|date:"Y-m-d" }}T{{ reserva.hora_fin|time:"H:i:s" }}',
+
                 backgroundColor: '#FF5C5C',  // rojo suave
                 borderColor: '#FF5C5C',      // rojo suave
                 textColor: 'white',          // letras blancas
@@ -67,17 +69,21 @@
         slotDuration:   '00:30:00',
         slotLabelInterval: '00:30',
 
-      dateClick: function(info) {
-        const [fecha, hora_inicio] = info.dateStr.split('T');
+  dateClick: function(info) {
+    const fechaCompleta = info.dateStr;  // formato: 2025-04-27T10:30:00-05:00
+    const partes = fechaCompleta.split('T');
+
+    if (partes.length === 2) {
+        const fecha = partes[0];  // "2025-04-27"
+        const horaCompleta = partes[1].substring(0,5);  // "10:30"
 
         document.getElementById('fechaReserva').value = fecha;
+        document.getElementById('hora_inicio').value = horaCompleta;
+        document.getElementById('hora_fin').value = calcularHoraFin(horaCompleta);
+    }
 
-        // Para hora de inicio creamos un input hidden
-        document.getElementById('horaInicio').value = hora_inicio.substring(0,5); // 08:00
-        document.getElementById('horaFin').value = calcularHoraFin(hora_inicio);
-
-        document.getElementById('reservationForm').classList.remove('hidden');
-      }
+    document.getElementById('reservationForm').classList.remove('hidden');
+}
 
      
 
@@ -87,12 +93,35 @@
 
     calendar.render();
   });
-  function calcularHoraFin(horaInicio) {
+  document.addEventListener('click', function(event) {
+    var reservationForm = document.getElementById('reservationForm');
+
+    // Solo cerrar si el formulario está visible
+    if (!reservationForm.classList.contains('hidden')) {
+        // Si el clic fue fuera del formulario
+        if (!reservationForm.contains(event.target)) {
+            reservationForm.classList.add('hidden');
+        }
+    }
+});
+
+function calcularHoraFin(horaInicio) {
     const [hora, minuto] = horaInicio.split(':').map(Number);
-    let nuevaHora = hora + 1;
-    if (nuevaHora > 23) nuevaHora = 23;  // No pasarse de las 23h
-    return (nuevaHora < 10 ? '0' : '') + nuevaHora + ':' + minuto;
-  }
+
+    let nuevaHora = hora;
+    let nuevosMinutos = minuto + 30; // sumamos 30 minutos
+
+    if (nuevosMinutos >= 60) {
+        nuevaHora += 1;               // sumamos 1 hora
+        nuevosMinutos -= 60;           // corregimos los minutos
+    }
+    if (nuevaHora > 23) nuevaHora = 23;  // no pasar de las 23:00
+
+    // Retornamos el nuevo horario formateado "HH:MM"
+    return (nuevaHora < 10 ? '0' : '') + nuevaHora + ':' + (nuevosMinutos < 10 ? '0' : '') + nuevosMinutos;
+}
+
+
   </script>
 </body>
 </html>
