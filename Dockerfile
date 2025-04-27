@@ -9,6 +9,8 @@ COPY requirements.txt .
 
 # Instalamos las dependencias del proyecto
 RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update && apt-get install -y netcat-openbsd
+
 
 # Copiamos el resto del proyecto
 COPY . .

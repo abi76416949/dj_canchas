@@ -16,10 +16,13 @@ services:
     build: .
     command: >
       sh -c "
-      python manage.py migrate &&
-      python manage.py runscript seed &&
-      python manage.py runserver 0.0.0.0:8000
+        ./wait-for-db.sh db 5432 &&
+        python manage.py makemigrations &&
+        python manage.py migrate &&
+        python manage.py runscript seed &&
+        python manage.py runserver 0.0.0.0:8000
       "
+
     volumes:
       - .:/app
     ports:
