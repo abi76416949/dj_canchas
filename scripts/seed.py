@@ -8,6 +8,7 @@ User = get_user_model()
 def run():
     # Primero los usuarios
     if not User.objects.filter(username='admin').exists():
+
         admin = User.objects.create_superuser(
             username='admin',
             email='admin@example.com',
@@ -45,11 +46,13 @@ def run():
         )
         print("✅ Cliente creado.")
 
-    # Opcional: Crear polideportivo y cancha para que no esté vacío
+        # Opcional: Crear polideportivo y cancha para que no esté vacío
+    propietario = Propietario.objects.first() 
     if not PolideportivoModel.objects.exists():
         poli = PolideportivoModel.objects.create(
             nombre='Polideportivo Demo',
-            ubicacion='Calle Falsa 123'
+            ubicacion='Calle Falsa 123',
+            propietario=propietario  # 👈 ESTE TE FALTABA
         )
         CourtModel.objects.create(
             nombre='Cancha 1',
@@ -60,3 +63,4 @@ def run():
             tipo=["césped", "sin techo"]
         )
         print("✅ Polideportivo y cancha creados.")
+
