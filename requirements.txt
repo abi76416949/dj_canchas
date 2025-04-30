@@ -6,3 +6,4 @@ Pillow
 #para que se cargen datos por defecto una ves quue inicias
 django-extensions
 
+selenium
